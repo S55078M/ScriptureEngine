@@ -1,0 +1,239 @@
+/*Что куда
+
+Фича:
+- перемещение по слоям по оси Z
+- снежный ком
+- астероид летит на встречу к людям
+- ранер с задействием времени
+- корова против инопланетян
+
+
+идея 4:
+- робот - гг
+
+1. Разобраться с функционалом (устройство игры)
+2. Выделить подсистемы:
+	2.1 База данных 
+	2.2 Графическая оболочка
+	2.3 Взаимодействие с пользователем
+	2.4 Звуки
+	2.5 Движок игры
+		2.5.1 Рендер
+		2.5.2 
+
+
+
+
+Движок:
+	(работа с положениями)
+	Рендер
+		базовые действия
+			рендер
+			цвет
+			очистка
+			освободить цель рендеринга
+		работа с изображениями (объект)
+		работа с областями (объект)
+		отрисовка геометрии
+		работа с текстом (объект)
+	Input
+		обработчик событий
+		получение информации о событиях
+	Звук
+		звук
+	ЛОГ
+		инициализация потока вывода
+		вывод сообщения
+	Контекст
+		Инициализация
+		Обновление
+		Выход
+		Смена контекста
+		Смена элемента управления
+	  : Фасад Контекст
+	  : Скрипт Контекст
+	База данных
+
+
+Игра:
+	Контейнер условий и действий
+
+
+
+
+*/
+
+
+
+
+onCreate {
+	// подготовка
+	glSurfaceView...
+	setContentView(currentView);
+
+	while (run){
+		context.update();
+	}
+	context.end();
+}
+
+onCreate {
+	changeContext(Context(this));
+	super.onCreate();
+}
+
+// Context
+start(oldstate) {
+	state.constructState(oldState);
+	contextScript.setScripts();
+}
+
+
+changeContext(Context newContext){
+	if (run) {
+		temp = curContext.getState();
+		curContext.closeContext();
+	}
+	else 
+		temp = null;
+	curContext = newContext;
+	curContext.startContext(temp);
+	currentView.SetRenderer(newContext.getRenderer());
+	currnetView.end();
+}
+
+
+
+
+
+drawObj(grphicalEng){
+	grphicalEng.Draw(image,position_x...);
+}
+
+
+
+
+
+
+
+Script(Always, do1)
+p1(ContextState)
+do1(ContextState)
+compare_x(id1, id2, LESS)
+Script(compare_x(id1, id2, LESS), dodo1)
+
+public interface Function<F, T> {
+    T apply(F from);
+}
+
+public static Always = new Predicate { 
+	@Override 
+	bool apply (ContextState state) { 
+		return true;
+	} 
+}
+
+
+public comapare_x (int id1, int id2, int flag){
+	if (flag == LESS){
+		return new Predicate {
+			@Override
+			bool apply (ContextState state) {
+				return getDrawableObject(id1).position_x < getDrawableObject(id2).position_x;
+			}
+		}
+	}
+	else ...
+}
+
+public Boolean ifSpriteByName(String name, int id) {
+	return new Predicate {
+		@Override
+		bool apply (ContextState state) {
+			return hashFindByHash(id).name == name
+		}
+	}
+}
+
+
+
+
+
+
+
+// Композиция функций    		werewolf = (predicate) -> (compose((bl) -> !bl, predicate));
+public static <T,M,A> Function<A,M> compose(Function<T, M> f2, Function<A, T> f1) {
+	return new Function<A,M> {
+		@Override
+		M apply (A arg) {
+			return f2.apply(f1.apply(arg));
+		}
+	};
+}
+
+// Бинарная Константа
+public static <A,T> Function<T,A> const(A val) {
+	return new Function<T,A> {
+		@Override
+		A apply (T arg) {
+			return val;
+		}
+	};
+}
+
+// Функция Каррирования (f(a,b) == curry(f)(a)(b))				werevolf = curry(compose)(curry(!=)(true));
+public static <A,F,T,B> Function<A,Function<B,T>> curry(F f2param) {
+	return new Function<A,Function<B,T>> {
+		@Override
+		Function<A,T> apply (A arg1) {
+			return new Function<B,T> {
+				@Override
+				T apply (B arg2) {
+					return f2param.apply(arg1, arg2);
+				}
+			};
+		}
+	};
+}
+
+// Функция оборачивания порядка ввода аргументов (f(a)(b) == flip(f)(b)(a))
+public static <A,B,T> Function<B,Function<A,T>> flip(Function<A,Function<B,T>> f) {
+	return new Function<B,Function<A,T>> {
+		@Override
+		Function<A,T> apply (B arg2) {
+			return new Function<A,T> {
+				@Override
+				T apply (A arg1) {
+					return f.apply(arg1).apply(arg2)
+				}
+			};
+		}
+	};
+}
+
+
+
+
+
+onStart;
+onceCond(Predicate);
+forewerCond(Predicate);
+not(Predicate);				// = curry(compose)(curry(!=)(true))
+or(Predicate, Predicate);
+and(Predicate, Predicate);
+compare(T val1, T val2);
+compare(T val1, Function<ContextState, T> val2);
+compare(Function<ContextState, T> val1, Function<ContextState, T> val2);
+always;
+whenCalled(int scriptId);
+byMs(int);
+byTicks(int);
+
+
+getDrawableObject(int)
+getSpritesByName(string)
+
+
+whileScript(Script);
+forScript(int, Function<int, Script>);
+forEachScript(Collection<T>, Function<T, Script>);
