@@ -8,8 +8,8 @@ package com.gamedev.dreamteam.scriptureengine;
  */
 public class Script implements Action {
 
-    private Predicate predicate;
-    private Action[] actions;
+    private final Predicate predicate;
+    private final Action[] actions;
 
     /** Конструктор объекта, назначающий поля predicate и action (является массивом объектов типа Action):
      *   new Script(condition, action1, action2, new Script(condition2, action 3));  (пример 1)
@@ -18,6 +18,7 @@ public class Script implements Action {
         this.predicate = predicate;
         this.actions = actions;
     }
+
 
     /** Запускает выполнение скрипта, проверяя predicate на передоваемом параметре, и запускающий цепочку событий
      *  типа Action, вызывая поочередно у каждого метод apply:
